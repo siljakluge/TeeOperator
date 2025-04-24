@@ -1,0 +1,23 @@
+# name: test/sql/tee.test
+# description: test tee extension
+# group: [tee]
+
+# Before we load the extension, this will fail
+statement error
+SELECT tee('Sam');
+----
+Catalog Error: Scalar Function with name tee does not exist!
+
+# Require statement will ensure this test is run with this extension loaded
+require tee
+
+# Confirm the extension works
+query I
+SELECT tee('Sam');
+----
+Tee Sam 🐥
+
+query I
+SELECT tee_openssl_version('Michael') ILIKE 'Tee Michael, my linked OpenSSL version is OpenSSL%';
+----
+true
